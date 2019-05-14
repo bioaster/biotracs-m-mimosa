@@ -1,0 +1,10 @@
+{
+	"name"			: "biotracs-m-mimosa",
+    "description"    : "Biotracs application the processing and analysis mass-spectrometry data",
+	"dependencies"	: [
+        "biotracs-m-atlas",
+        "biotracs-m-metadata",
+        "biotracs-m-mzconvert",
+        "biotracs-m-openms"
+		]
+}

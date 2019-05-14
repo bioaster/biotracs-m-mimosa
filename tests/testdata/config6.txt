@@ -1,0 +1,49 @@
+#Configuration file for the metabolomic workflow for LC-MS
+#CONVERT	Field	Parameter	A1	A2	A3	A4	
+#EXTRACT	Field	Parameter	A1	A2	A3	A4	
+#LINK	Field	Parameter	A1	A2	A3	A4	A5	A6	
+#PREPROCESS	Field	Parameter	A1	A2	A3	A4	A5	
+CONVERT	Batch		1	1	2	2
+CONVERT	Polarity		Neg	Pos	Neg	Pos
+CONVERT	DataDirectory		Z:\BioappsTests\Mimosa\RawData\Batch1Neg\	Z:\BioappsTests\Mimosa\RawData\Batch1Pos\	Z:\BioappsTests\Mimosa\RawData\Batch2Neg\	Z:\BioappsTests\Mimosa\RawData\Batch2Pos\
+CONVERT	WorkingDirectory		?home?\Mimosa\Batch1Neg\MzConvert\	?home?\Mimosa\Batch1Pos\MzConvert\	?home?\Mimosa\Batch2Neg\MzConvert\	?home?\Mimosa\Batch2Pos\MzConvert\
+CONVERT	ProcessParam	MzFileImporter:FileExtensionFilter	raw	raw	raw	raw
+CONVERT	ProcessParam	MzConverter:IntensityThreshold	100	100	200	200
+CONVERT	ProcessParam	MzConverter:TimeRange	500, 2500	500, 2500	500, 2500	500, 2500
+CONVERT	ProcessParam	MzConverter:MzRange	500, 1500	500, 1500	500, 1500	500, 1500
+EXTRACT	Batch		1	1	2	2
+EXTRACT	Polarity		Neg	Pos	Neg	Pos
+EXTRACT	DataDirectory					
+EXTRACT	WorkingDirectory		?home?\Mimosa\Batch1Neg\FeatureExtraction\	?home?\Mimosa\Batch1Pos\FeatureExtraction\	?home?\Mimosa\Batch2Neg\FeatureExtraction\	?home?\Mimosa\Batch2Pos\FeatureExtraction\
+LINK	Batch		1	1	2	2	1_2	1_2
+LINK	Polarity		Neg	Pos	Neg	Pos	Neg	Pos
+LINK	DataDirectory						C:\Users\jabighanem\BIOASTER\PRISM\Mimosa\Batch1Neg\FeatureExtraction\004-FileFilter\,C:\Users\jabighanem\BIOASTER\PRISM\Mimosa\Batch2Neg\FeatureExtraction\004-FileFilter\	C:\Users\jabighanem\BIOASTER\PRISM\Mimosa\Batch1Pos\FeatureExtraction\004-FileFilter\,C:\Users\jabighanem\BIOASTER\PRISM\Mimosa\Batch2Pos\FeatureExtraction\004-FileFilter\
+LINK	WorkingDirectory		?home?\Mimosa\Batch1Neg\FeatureLinking\	?home?\Mimosa\Batch1Pos\FeatureLinking\	?home?\Mimosa\Batch2Neg\FeatureLinking\	?home?\Mimosa\Batch2Pos\FeatureLinking\	?home?\Mimosa\Batch12Neg\FeatureLinking\	?home?\Mimosa\Batch12Pos\FeatureLinking\
+LINK	ProcessParam	MapAlignerPoseClustering:Reference	QC9_B1_neg_092	QC1_B1_pos_046	QC3_B2_neg_058	QC4_B2_pos_047	QC3_B2_neg_058	QC3_B2_pos_011
+PREPROCESS	Batch		1	1	2	2	1_2
+PREPROCESS	Polarity		Neg	Pos	Neg	Pos	NegPos
+PREPROCESS	NegDataDirectory						
+PREPROCESS	PosDataDirectory						
+PREPROCESS	WorkingDirectory		?home?\Mimosa\Batch1Neg\PreProcessing\	?home?\Mimosa\Batch1Pos\PreProcessing\	?home?\Mimosa\Batch2Neg\PreProcessing\	?home?\Mimosa\Batch2Pos\PreProcessing\	?home?\Mimosa\Batch12\PreProcessing\
+PREPROCESS	SampleMetaData		Z:\BioappsTests\Mimosa\MetaData\MetaData_V3.xlsx	Z:\BioappsTests\Mimosa\MetaData\MetaData_V3.xlsx	Z:\BioappsTests\Mimosa\MetaData\MetaData_V3.xlsx	Z:\BioappsTests\Mimosa\MetaData\MetaData_V3.xlsx	Z:\BioappsTests\Mimosa\MetaData\MetaData_V3.xlsx
+PREPROCESS	NegProcessParam	NegModePreprocessingWorkflow:MetaTableParser:Sheet	MS		MS		MS
+PREPROCESS	NegProcessParam	NegModePreprocessingWorkflow:ConsensusDataExtractor:Polarity	Neg		Neg		Neg
+PREPROCESS	NegProcessParam	NegModePreprocessingWorkflow:ConsensusDataAnnotator:HeadersToUse	SampleType,Nb,Acronym,Drugname,SequenceNumber,Batch,BiologicalReplicate,Polarity		SampleType,Nb,Acronym,Drugname,SequenceNumber,Batch,BiologicalReplicate,Polarity		SampleType,Nb,Acronym,Drugname,SequenceNumber,Batch,BiologicalReplicate,Polarity
+PREPROCESS	NegProcessParam	NegModePreprocessingWorkflow:ConsensusDataAnnotator:UserIdHeader	UserID		UserID		UserID
+PREPROCESS	NegProcessParam	NegModePreprocessingWorkflow:DataSelector:ListOfNames	QC1_B1_neg_054		QC3_B2_neg_056		QC1_B1_neg_054
+PREPROCESS	NegProcessParam	NegModePreprocessingWorkflow:PercentageRuleFilter:PercentageRuleThreshold	0.8		0.8		0.8
+PREPROCESS	NegProcessParam	NegModePreprocessingWorkflow:PercentageRuleFilter:GroupList	Drugname:None,Drugname:S205,Sampletype:QC		Drugname:None,Drugname:S205,Sampletype:QC		Drugname:None, Drugname:S205, Sampletype:QC
+PREPROCESS	NegProcessParam	NegModePreprocessingWorkflow:PercentageRuleFilter:MethodOfFiltering	QcOrSample		QcOrSample		QcOrSample
+PREPROCESS	NegProcessParam	NegModePreprocessingWorkflow:PercentageRuleFilter:LoQ	1.00E+04		1.00E+04		1.00E+04
+PREPROCESS	NegProcessParam	NegModePreprocessingWorkflow:QcCvFilter:QcCvThreshold	0.2		0.2		0.2
+PREPROCESS	PosProcessParam	PosModePreprocessingWorkflow:MetaTableParser:Sheet		MS		MS	MS
+PREPROCESS	PosProcessParam	PosModePreprocessingWorkflow:ConsensusDataExtractor:Polarity		Pos		Pos	Pos
+PREPROCESS	PosProcessParam	PosModePreprocessingWorkflow:ConsensusDataAnnotator:HeadersToUse		SampleType,Nb,Acronym,Drugname,SequenceNumber,Batch,BiologicalReplicate,Polarity		SampleType,Nb,Acronym,Drugname,SequenceNumber,Batch,BiologicalReplicate,Polarity	SampleType,Nb,Acronym,Drugname,SequenceNumber,Batch,BiologicalReplicate,Polarity
+PREPROCESS	PosProcessParam	PosModePreprocessingWorkflow:ConsensusDataAnnotator:UserIdHeader		UserID		UserID	UserID
+PREPROCESS	PosProcessParam	PosModePreprocessingWorkflow:DataSelector:ListOfNames		QC2_B1_pos_009		QC4_B2_pos_008	QC2_B1_pos_009, QC4_B2_pos_008
+PREPROCESS	PosProcessParam	PosModePreprocessingWorkflow:PercentageRuleFilter:PercentageRuleThreshold		0.8		0.8	0.8
+PREPROCESS	PosProcessParam	PosModePreprocessingWorkflow:PercentageRuleFilter:GroupList		Drugname:None,Drugname:S205,Sampletype:QC		Drugname:None,Drugname:S205,Sampletype:QC	Drugname:None,Drugname:S205,Sampletype:QC
+PREPROCESS	PosProcessParam	PosModePreprocessingWorkflow:PercentageRuleFilter:MethodOfFiltering		QcOrSample		QcOrSample	QcOrSample
+PREPROCESS	PosProcessParam	PosModePreprocessingWorkflow:PercentageRuleFilter:LoQ		1.00E+04		1.00E+04	1.00E+04
+PREPROCESS	PosProcessParam	PosModePreprocessingWorkflow:QcCvFilter:QcCvThreshold		0.2		0.2	0.2
+PREPROCESS	NegPosProcessParam	FeatureSetMerger:AnnotationNamesForMerging					Batch,Nb,Drugname,BiologicalReplicate,SampleType,Acronym
