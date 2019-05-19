@@ -124,7 +124,7 @@ classdef Controller < biotracs.core.mvc.controller.Controller
         
         %-- I --
         
-        function importConfigFilePath( this, iFilePath )
+        function importUserConfigFilePath( this, iFilePath )
             if ~isempty(iFilePath)
                 this.userConfigTable = biotracs.mimosa.model.UserConfigTable.import(iFilePath, 'NbHeaderLines', 1);
             end
@@ -364,18 +364,16 @@ classdef Controller < biotracs.core.mvc.controller.Controller
             
             this.listOfBatches = p.Results.Batches;
             this.listOfPolarities = p.Results.Polarities;
-            this.importConfigFilePath(p.Results.UserConfigFilePath)
+            this.importUserConfigFilePath(p.Results.UserConfigFilePath)
             %... create processes
             for i = 1:length(this.listOfBatches)
                 currentBatch = this.listOfBatches{i};
                 for j = 1:length(this.listOfPolarities)
                     currentPolarity = this.listOfPolarities{j};
-                    
                     this.doCreateMzConvertWorkflow( currentBatch, currentPolarity );
                     this.doCreateMetaboExtractionWorkflow( currentBatch, currentPolarity );
                     this.doCreateMetaboLinkingWorkflow( currentBatch, currentPolarity );
                     this.doCreatePreprocessingWorkflow( currentBatch, currentPolarity );
-                    
                 end
             end
             
