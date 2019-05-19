@@ -1,0 +1,10 @@
+#Configuration file for the metabolomic workflow for LC-MS
+#CONVERT	Field	Parameter	A1	A2	A3	A4
+CONVERT	Batch		1	1	2	2
+CONVERT	Polarity		Neg	Pos	Neg	Pos
+CONVERT	DataDirectory		%RAW_DATA_DIR%\Batch1Neg\	%RAW_DATA_DIR%\Batch1Pos\	%RAW_DATA_DIR%\Batch2Neg\	%RAW_DATA_DIR%\Batch2Pos\
+CONVERT	WorkingDirectory		%WORKING_DIR%\Mimosa\Batch1Neg\MzConvert\	%WORKING_DIR%\Mimosa\Batch1Pos\MzConvert\	%WORKING_DIR%\Mimosa\Batch2Neg\MzConvert\	%WORKING_DIR%\Mimosa\Batch2Pos\MzConvert\
+CONVERT	ProcessParam	MzFileImporter:FileExtensionFilter	raw	raw	raw	raw
+CONVERT	ProcessParam	MzConverter:IntensityThreshold	100	100	200	200
+CONVERT	ProcessParam	MzConverter:TimeRange	500, 2500	500, 2500	500, 2500	500, 2500
+CONVERT	ProcessParam	MzConverter:MzRange	500, 1500	500, 1500	500, 1500	500, 1500

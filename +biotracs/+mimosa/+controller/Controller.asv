@@ -358,13 +358,13 @@ classdef Controller < biotracs.core.mvc.controller.Controller
             p.KeepUnmatched = true;
             p.parse( varargin{:} );
             
-            if ~isfile(p.Results.UserConfigFilePath)
-                error('BIOTRACS:Mimosa:FileNotFound', 'No user configuration file found');
+            if ~isfile(p.Results.ConfigFilePath)
+                error('BIOTRACS:Mimosa:')
             end
             
             this.listOfBatches = p.Results.Batches;
             this.listOfPolarities = p.Results.Polarities;
-            this.importConfigFilePath(p.Results.UserConfigFilePath)
+            this.importConfigFilePath(p.Results.ConfigFilePath)
             %... create processes
             for i = 1:length(this.listOfBatches)
                 currentBatch = this.listOfBatches{i};
