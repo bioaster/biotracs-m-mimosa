@@ -1,0 +1,6 @@
+#Configuration file for the metabolomic workflow for LC-MS
+#EXTRACT	Field	Parameter	A1	A2	A3	A4
+EXTRACT	Batch		1	1	2	2
+EXTRACT	Polarity		Neg	Pos	Neg	Pos
+EXTRACT	DataDirectory		%WORKING_DIR%\Mimosa\Batch1Neg\MzConvert\002-MzConverter	%WORKING_DIR%\Mimosa\Batch1Pos\MzConvert\002-MzConverter	%WORKING_DIR%\Mimosa\Batch2Neg\MzConvert\002-MzConverter	%WORKING_DIR%\Mimosa\Batch2Pos\MzConvert\002-MzConverter
+EXTRACT	WorkingDirectory		%WORKING_DIR%\Mimosa\Batch1Neg\FeatureExtraction\	?home?\Mimosa\Batch1Pos\FeatureExtraction\	?home?\Mimosa\Batch2Neg\FeatureExtraction\	?home?\Mimosa\Batch2Pos\FeatureExtraction\

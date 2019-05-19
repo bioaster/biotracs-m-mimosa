@@ -11,6 +11,50 @@ To learn more about the biotracs project, please refers to https://github.com/bi
 
 Please refer to the documentation at https://bioaster.github.io/biotracs/documentation
 
+## Keep in mind!
+
+* The `autoload.m` file is available in the directory (./tests/)
+* Some examples of user configuration files are available in directory (./usage/user_config_files/)
+* When calling `autoload` function, argument `PkgPaths` refers the list directory paths containing all the BioTracs applications. It is recommended to keep all the applications in the same directory.
+
+## Usage code
+
+```matlab
+% file main.m
+%-------------------------------------------------
+
+addpath('/path/to/atoload.m/');
+pkgDir = fullfile('/path/to/package/dir/');
+autoload( ...
+	'PkgPaths', { pkgDir }, ...
+	'Dependencies', {...
+		'biotracs-m-mimosa', ...
+	}, ...
+	'Variables',  struct(...
+		'OpenMSBinPath', 'C:/Program Files/OpenMS-2.3.0/bin/', ...
+		'MzConvertFilePath', 'C:/Program Files/ProteoWizard/ProteoWizard 3.0.9992/msconvert.exe' ...
+	) ...
+);
+
+% Configure application controller
+% Examples of user configuration files are available in the './usage/user_config_files/' sub-directory
+ctrl = biotracs.mimosa.controller.Controller(...
+	'Batches', { '1', '2', '1_2'}, ...
+	'Polarities', {'Neg', 'Pos', 'NegPos'}, ...
+	'UserConfigFilePath', '/path/to/usage/user_config_files/UserConfig_NoConvert.csv/' ...
+);
+
+% Override global working directory
+biotracs.core.env.Env.workingDir('/path/of/the/working/directory');
+
+%ctrl.convertAction( );			%comment this line if the .raw files are already converted to .mzXML (ensure that to appropriate user config file is used)
+ctrl.extractionAction( );
+ctrl.linkingAction( );
+ctrl.preprocessingAction( );
+
+% Unless otherwise specified, the output results will be written in %USER_HOME_DIR%/BIOASTER/BIOTRACS/Mimosa
+```
+
 # License
 
 BIOASTER license https://github.com/bioaster/biotracs/blob/master/LICENSE

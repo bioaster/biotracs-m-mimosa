@@ -1,0 +1,70 @@
+#Configuration file for the metabolomic workflow for LC-MS
+#CONVERT	Field	Parameter	A1	A2	A3	A4
+#EXTRACT	Field	Parameter	A1	A2	A3	A4
+#LINK	Field	Parameter	A1	A2	A3	A4	A5	A6
+#PREPROCESS	Field	Parameter	A1	A2	A3	A4	A5
+CONVERT	Batch		1	1	2	2
+CONVERT	Polarity		Neg	Pos	Neg	Pos
+CONVERT	DataDirectory		Z:\BioappsTests\Mimosa\RawData\Batch1Neg\	Z:\BioappsTests\Mimosa\RawData\Batch1Pos\	Z:\BioappsTests\Mimosa\RawData\Batch2Neg\	Z:\BioappsTests\Mimosa\RawData\Batch2Pos\
+CONVERT	WorkingDirectory		%WORKING_DIR%\MimosaFeb2019Bis3\Batch1Neg\MzConvert\	%WORKING_DIR%\MimosaFeb2019Bis3\Batch1Pos\MzConvert\	%WORKING_DIR%\MimosaFeb2019Bis3\Batch2Neg\MzConvert\	%WORKING_DIR%\MimosaFeb2019Bis3\Batch2Pos\MzConvert\
+CONVERT	ProcessParam	MzFileImporter:FileExtensionFilter	raw	raw	raw	raw
+CONVERT	ProcessParam	MzConverter:IntensityThreshold	100	100	200	200
+CONVERT	ProcessParam	MzConverter:TimeRange	500, 2500	500, 2500	500, 2500	500, 2500
+CONVERT	ProcessParam	MzConverter:MzRange	500, 1500	500, 1500	500, 1500	500, 1500
+EXTRACT	Batch		1	1	2	2
+EXTRACT	Polarity		Neg	Pos	Neg	Pos
+EXTRACT	DataDirectory					
+EXTRACT	WorkingDirectory		%WORKING_DIR%\MimosaFeb2019Bis3\Batch1Neg\FeatureExtraction\	%WORKING_DIR%\MimosaFeb2019Bis3\Batch1Pos\FeatureExtraction\	%WORKING_DIR%\MimosaFeb2019Bis3\Batch2Neg\FeatureExtraction\	%WORKING_DIR%\MimosaFeb2019Bis3\Batch2Pos\FeatureExtraction\
+LINK	Batch		1	1	2	2	1_2	1_2
+LINK	Polarity		Neg	Pos	Neg	Pos	Neg	Pos
+LINK	DataDirectory						%WORKING_DIR%\MimosaFeb2019Bis3\Batch1Neg\FeatureExtraction\004-FileFilter\,%WORKING_DIR%\MimosaFeb2019Bis3\Batch2Neg\FeatureExtraction\004-FileFilter\	%WORKING_DIR%\MimosaFeb2019Bis3\Batch1Pos\FeatureExtraction\004-FileFilter\,%WORKING_DIR%\MimosaFeb2019Bis3\Batch2Pos\FeatureExtraction\004-FileFilter\
+LINK	WorkingDirectory		%WORKING_DIR%\MimosaFeb2019Bis3\Batch1Neg\FeatureLinking\	%WORKING_DIR%\MimosaFeb2019Bis3\Batch1Pos\FeatureLinking\	%WORKING_DIR%\MimosaFeb2019Bis3\Batch2Neg\FeatureLinking\	%WORKING_DIR%\MimosaFeb2019Bis3\Batch2Pos\FeatureLinking\	%WORKING_DIR%\MimosaFeb2019Bis3\Batch12Neg\FeatureLinking\	%WORKING_DIR%\MimosaFeb2019Bis3\Batch12Pos\FeatureLinking\
+LINK	ProcessParam	MapAlignerPoseClustering:Reference	QC9_B1_neg_092	QC1_B1_pos_046	QC3_B2_neg_058	QC4_B2_pos_047	QC3_B2_neg_058	QC3_B2_pos_011
+PREPROCESS	Batch		1	1	2	2	1_2
+PREPROCESS	Polarity		Neg	Pos	Neg	Pos	NegPos
+PREPROCESS	NegDataDirectory						
+PREPROCESS	PosDataDirectory						
+PREPROCESS	WorkingDirectory		%WORKING_DIR%\MimosaFeb2019Bis3\Batch1Neg\PreProcessing\	%WORKING_DIR%\MimosaFeb2019Bis3\Batch1Pos\PreProcessing\	%WORKING_DIR%\MimosaFeb2019Bis3\Batch2Neg\PreProcessing\	%WORKING_DIR%\MimosaFeb2019Bis3\Batch2Pos\PreProcessing\	%WORKING_DIR%\MimosaFeb2019Bis3\Batch12\PreProcessing\
+PREPROCESS	SampleMetaData		Z:\BioappsTests\Mimosa\MetaData\MetaData_V4.xlsx	Z:\BioappsTests\Mimosa\MetaData\MetaData_V4.xlsx	Z:\BioappsTests\Mimosa\MetaData\MetaData_V4.xlsx	Z:\BioappsTests\Mimosa\MetaData\MetaData_V4.xlsx	Z:\BioappsTests\Mimosa\MetaData\MetaData_V4.xlsx
+PREPROCESS	NegProcessParam	NegModePreprocessingWorkflow:MetaTableParser:Sheet	 MS 		MS		MS
+PREPROCESS	NegProcessParam	NegModePreprocessingWorkflow:ConsensusDataExtractor:Polarity	 Neg 		Neg		Neg
+PREPROCESS	NegProcessParam	NegModePreprocessingWorkflow:ConsensusDataAnnotator:HeadersToUse	SampleType, Nb, Acronym, Drugname, SequenceNumber, Batch, BiologicalReplicate, Polarity		SampleType,Nb,Acronym,Drugname,SequenceNumber,Batch,BiologicalReplicate,Polarity		SampleType,Nb,Acronym,Drugname,SequenceNumber,Batch,BiologicalReplicate,Polarity
+PREPROCESS	NegProcessParam	NegModePreprocessingWorkflow:ConsensusDataAnnotator:UserIdHeader	 UserID		UserID		UserID
+PREPROCESS	NegProcessParam	NegModePreprocessingWorkflow:DataSelector:ListOfNames	QC1_B1_neg_054		QC3_B2_neg_056		QC1_B1_neg_054
+PREPROCESS	NegProcessParam	NegModePreprocessingWorkflow:ViewConsensusDataAnnotator:ViewParameters	 SampleType		SampleType		SampleType
+PREPROCESS	NegProcessParam	NegModePreprocessingWorkflow:ViewPcaConsensusDataAnnotator:ViewParameters	SampleType, SampleType		SampleType, SampleType		SampleType, SampleType
+PREPROCESS	NegProcessParam	NegModePreprocessingWorkflow:ViewBlankFilter:ViewParameters	 SampleType		SampleType		SampleType
+PREPROCESS	NegProcessParam	NegModePreprocessingWorkflow:ViewPcaBlankFilter:ViewParameters	SampleType,SampleType		SampleType,SampleType		SampleType,SampleType
+PREPROCESS	NegProcessParam	NegModePreprocessingWorkflow:PercentageRuleFilter:PercentageRuleThreshold	 0.8		0.8		0.8
+PREPROCESS	NegProcessParam	NegModePreprocessingWorkflow:PercentageRuleFilter:GroupList	Drugname:None,Drugname:S205,Sampletype:QC		Drugname:None,Drugname:S205,Sampletype:QC		Drugname:None, Drugname:S205, Sampletype:QC
+PREPROCESS	NegProcessParam	NegModePreprocessingWorkflow:PercentageRuleFilter:MethodOfFiltering	 QcOrSample 		QcOrSample		QcOrSample
+PREPROCESS	NegProcessParam	NegModePreprocessingWorkflow:ViewPercentageRuleFilter:ViewParameters	 SampleType		SampleType		SampleType
+PREPROCESS	NegProcessParam	NegModePreprocessingWorkflow:ViewPcaPercentageRuleFilter:ViewParameters	 SampleType, SampleType		SampleType, SampleType		SampleType, SampleType
+PREPROCESS	NegProcessParam	NegModePreprocessingWorkflow:QcCvFilter:QcCvThreshold	 0.2		0.2		0.2
+PREPROCESS	NegProcessParam	NegModePreprocessingWorkflow:QcCvFilter:LoQ	1.00E+04		 1.00E+04		1.00E+04
+PREPROCESS	NegProcessParam	NegModePreprocessingWorkflow:ViewPcaQcCvFilter:ViewParameters	SampleType,SampleType		SampleType,SampleType		SampleType,SampleType
+PREPROCESS	NegProcessParam	NegModePreprocessingWorkflow:ViewPcaIntraBatchDriftCorrector:ViewParameters	 SampleType, SampleType		 SampleType, SampleType		 SampleType, SampleType
+PREPROCESS	NegProcessParam	NegModePreprocessingWorkflow:ViewPcaInterBatchDriftCorrector:ViewParameters	 SampleType, Batch		 SampleType, Batch		 SampleType, Batch
+PREPROCESS	NegProcessParam	ViewPcaFeatureMerger:ViewParameters	SampleType, Acronym		SampleType, Acronym		
+PREPROCESS	PosProcessParam	PosModePreprocessingWorkflow:MetaTableParser:Sheet		MS 		MS	MS
+PREPROCESS	PosProcessParam	PosModePreprocessingWorkflow:ConsensusDataExtractor:Polarity		Pos		Pos	Pos
+PREPROCESS	PosProcessParam	PosModePreprocessingWorkflow:ConsensusDataAnnotator:HeadersToUse		SampleType, Nb,Acronym,Drugname, SequenceNumber, Batch, BiologicalReplicate, Polarity		SampleType,Nb,Acronym,Drugname,SequenceNumber,Batch,BiologicalReplicate,Polarity	SampleType,Nb,Acronym,Drugname,SequenceNumber,Batch,BiologicalReplicate,Polarity
+PREPROCESS	PosProcessParam	PosModePreprocessingWorkflow:ConsensusDataAnnotator:UserIdHeader		 UserID		UserID	 UserID
+PREPROCESS	PosProcessParam	PosModePreprocessingWorkflow:DataSelector:ListOfNames		QC2_B1_pos_009		QC4_B2_pos_008	QC2_B1_pos_009, QC4_B2_pos_008
+PREPROCESS	PosProcessParam	PosModePreprocessingWorkflow:ViewConsensusDataAnnotator:ViewParameters		 SampleType		 SampleType	 SampleType
+PREPROCESS	PosProcessParam	PosModePreprocessingWorkflow:ViewPcaConsensusDataAnnotator:ViewParameters		SampleType, SampleType		SampleType, SampleType	SampleType, SampleType
+PREPROCESS	PosProcessParam	PosModePreprocessingWorkflow:ViewBlankFilter:ViewParameters		 SampleType		 SampleType	 SampleType
+PREPROCESS	PosProcessParam	PosModePreprocessingWorkflow:ViewPcaBlankFilter:ViewParameters		SampleType,SampleType		SampleType,SampleType	SampleType,SampleType
+PREPROCESS	PosProcessParam	PosModePreprocessingWorkflow:PercentageRuleFilter:PercentageRuleThreshold		0.8		0.8	0.8
+PREPROCESS	PosProcessParam	PosModePreprocessingWorkflow:PercentageRuleFilter:GroupList		Drugname:None,Drugname:S205,Sampletype:QC		Drugname:None,Drugname:S205,Sampletype:QC	Drugname:None,Drugname:S205,Sampletype:QC
+PREPROCESS	PosProcessParam	PosModePreprocessingWorkflow:PercentageRuleFilter:MethodOfFiltering		QcOrSample		QcOrSample	QcOrSample
+PREPROCESS	PosProcessParam	PosModePreprocessingWorkflow:ViewPercentageRuleFilter:ViewParameters		 SampleType		 SampleType	 SampleType
+PREPROCESS	PosProcessParam	PosModePreprocessingWorkflow:ViewPcaPercentageRuleFilter:ViewParameters		 SampleType, SampleType		 SampleType, SampleType	 SampleType, SampleType
+PREPROCESS	PosProcessParam	PosModePreprocessingWorkflow:QcCvFilter:QcCvThreshold		0.2		0.2	0.2
+PREPROCESS	PosProcessParam	PosModePreprocessingWorkflow:QcCvFilter:LoQ		1.00E+04		1.00E+04	1.00E+04
+PREPROCESS	PosProcessParam	PosModePreprocessingWorkflow:ViewPcaQcCvFilter:ViewParameters		SampleType,SampleType		SampleType,SampleType	SampleType,SampleType
+PREPROCESS	PosProcessParam	PosModePreprocessingWorkflow:ViewPcaIntraBatchDriftCorrector:ViewParameters		SampleType, SampleType		SampleType, SampleType	SampleType, SampleType
+PREPROCESS	PosProcessParam	PosModePreprocessingWorkflow:ViewPcaInterBatchDriftCorrector:ViewParameters		SampleType, Batch		SampleType, SampleType	SampleType, SampleType
+PREPROCESS	PosProcessParam	ViewPcaFeatureMerger:ViewParameters		SampleType, Acronym		SampleType, Acronym	
+PREPROCESS	NegPosProcessParam	FeatureSetMerger:AnnotationNamesForMerging					Batch,Nb,Drugname,BiologicalReplicate,SampleType,Acronym
+PREPROCESS	NegPosProcessParam	ViewPcaFeatureMerger:ViewParameters					Acronym,Acronym
