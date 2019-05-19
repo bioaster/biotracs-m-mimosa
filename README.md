@@ -16,13 +16,9 @@ To learn more about the biotracs project, please refers to https://github.com/bi
 
 Please refer to the documentation at https://bioaster.github.io/biotracs/documentation
 
-## Keep in mind!
-
-* The `autoload.m` file is available in the directory (./tests/)
-* Some examples of user configuration files are available in directory (./usage/user_config_files/)
+* The `autoload.m` file is available in the directory `./tests/`
+* Some examples of user configuration files are available in directory `./usage/user_config_files/`
 * When calling `autoload()` function, the argument `PkgPaths` refers to the list directory paths containing all the BioTracs applications. It however is recommended to keep all the applications in the same directory.
-
-## Usage code
 
 ```matlab
 % file main.m
