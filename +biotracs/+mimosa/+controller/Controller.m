@@ -329,7 +329,6 @@ classdef Controller < biotracs.core.mvc.controller.Controller
             
             workflowName = strcat('MetaboExtractionWorkflow_', iBatch, '_', iPolarity);
             this.add(workflow, workflowName);
-            
         end
         
         function doCreateMetaboLinkingWorkflow( this, iBatch, iPolarity )
@@ -337,7 +336,6 @@ classdef Controller < biotracs.core.mvc.controller.Controller
             
             workflowName = strcat('MetaboLinkingWorkflow_', iBatch, '_', iPolarity);
             this.add(workflow, workflowName);
-            
         end
         
         function doCreatePreprocessingWorkflow( this, iBatch, iPolarity )
@@ -345,7 +343,6 @@ classdef Controller < biotracs.core.mvc.controller.Controller
             
             workflowName = strcat('PreprocessingWorkflow_', iBatch, '_', iPolarity);
             this.add(workflow, workflowName);
-            
         end
         
         %-- I --
@@ -376,7 +373,6 @@ classdef Controller < biotracs.core.mvc.controller.Controller
                     this.doCreatePreprocessingWorkflow( currentBatch, currentPolarity );
                 end
             end
-            
         end
         
     end
