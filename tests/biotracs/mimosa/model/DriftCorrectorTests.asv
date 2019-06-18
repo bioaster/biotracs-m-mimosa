@@ -13,17 +13,17 @@ classdef DriftCorrectorTests < matlab.unittest.TestCase
         function testInterDriftCorrector(testCase)
             samplesForInterBatchCorrection = 'QCOnly';
             [ correctedFeatureSet ] = testCase.doInterDriftCorrector( samplesForInterBatchCorrection );
-            expectedCorrectedFeatureSet = biotracs.spectra.data.model.MSFeatureSet.import( '../../../testdata/DriftCorrection/CorrectedFeatureSetInter_WithQCOnly.csv' );
+            expectedCorrectedFeatureSet = biocode.ms.data.model.FeatureSet.import( '../../../testdata/DriftCorrection/CorrectedFeatureSetInter_WithQCOnly.csv' );
             testCase.verifyEqual( correctedFeatureSet.data, expectedCorrectedFeatureSet.data, 'RelTol', 1e-6 );
             
             samplesForInterBatchCorrection = 'SamplesWithoutQC';
             [ correctedFeatureSet ] = testCase.doInterDriftCorrector( samplesForInterBatchCorrection );
-            expectedCorrectedFeatureSet = biotracs.spectra.data.model.MSFeatureSet.import( '../../../testdata/DriftCorrection/CorrectedFeatureSetInter_WithoutQC.csv' );
+            expectedCorrectedFeatureSet = biocode.ms.data.model.FeatureSet.import( '../../../testdata/DriftCorrection/CorrectedFeatureSetInter_WithoutQC.csv' );
             testCase.verifyEqual( correctedFeatureSet.data, expectedCorrectedFeatureSet.data, 'RelTol', 1e-6 );
             
             samplesForInterBatchCorrection = 'All';
             [ correctedFeatureSet ] = testCase.doInterDriftCorrector( samplesForInterBatchCorrection );
-            expectedCorrectedFeatureSet = biotracs.spectra.data.model.MSFeatureSet.import( '../../../testdata/DriftCorrection/CorrectedFeatureSetInter_WithAllSamples.csv' );
+            expectedCorrectedFeatureSet = biocode.ms.data.model.FeatureSet.import( '../../../testdata/DriftCorrection/CorrectedFeatureSetInter_WithAllSamples.csv' );
             testCase.verifyEqual( correctedFeatureSet.data, expectedCorrectedFeatureSet.data, 'RelTol', 1e-6 );
         end
 
@@ -91,7 +91,7 @@ classdef DriftCorrectorTests < matlab.unittest.TestCase
             c.updateParamValue('CorrectionModel', 'linear');
             c.updateParamValue('LoQ', 1e3);
             c.updateParamValue('InterBatchCorrection', true);
-            c.updateParamValue('SamplesToUseForInterBatchCorrection', samplesForInterBatchCorrection);
+            
             c.updateParamValue('WorkingDirectory', testCase.workingDir);
             process.run();
             correctedFeatureSet = process.getOutputPortData('FeatureSet');
@@ -122,6 +122,10 @@ classdef DriftCorrectorTests < matlab.unittest.TestCase
                 'LabelFormat', {'MSBatch:([^_]*)', 'MSSampleType:([^_]*)'} ...
             );
 
+            % Test result
+            expectedCorrectedFeatureSet = biotracs.spectra.data.model.MSFeatureSet.import( '../../../testdata/DriftCorrection/CorrectedFeatureSetInter.csv' );
+            testCase.verifyEqual( correctedFeatureSet.data, expectedCorrectedFeatureSet.data, 'RelTol', 1e-6 );
+            
             %Restore stream
             RandStream.setGlobalStream(s);
         end

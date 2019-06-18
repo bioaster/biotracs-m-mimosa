@@ -86,8 +86,6 @@ classdef Controller < biotracs.core.mvc.controller.Controller
                 currentBatch= currentBatch{:};
                 currentPolarity = convertDesign.getFieldByDesignName('Polarity', names{i});
                 currentPolarity= currentPolarity{:};
-                %                 dataDirectory = convertDesign.getFieldByDesignName('DataDirectory',  names{i});
-                %                 dataDirectory = dataDirectory{:};
                 workingDirectory = convertDesign.getFieldByDesignName('WorkingDirectory', names{i});
                 workingDirectory= workingDirectory{:};
                 processParams = convertDesign.getFieldByDesignName('ProcessParam', names{i});
@@ -99,14 +97,12 @@ classdef Controller < biotracs.core.mvc.controller.Controller
                 mzConvertWorkflow = this.get(mzConvertWorkflowName);
                 if mzConvertWorkflow.isEnded()
                     dataDirectory = mzConvertWorkflow.getNode('MzConverter').getConfig().getParamValue('WorkingDirectory');
-                    
                 else
                     dataDirectory = convertDesign.getFieldByDesignName('DataDirectory',  names{i});
                     dataDirectory = dataDirectory{:};
                 end
                 
                 w = this.get(workflowName);
-                
                 w.getConfig()...
                     .updateParamValue('WorkingDirectory', workingDirectory);
                 w.writeParamValues( processParams{:} );
@@ -144,7 +140,6 @@ classdef Controller < biotracs.core.mvc.controller.Controller
                 currentBatch = currentBatch{:};
                 currentPolarity = convertDesign.getFieldByDesignName('Polarity', names{i});
                 currentPolarity= currentPolarity{:};
-                %                 dataDirectory = convertDesign.getFieldByDesignName('DataDirectory',  names{i});
                 workingDirectory = convertDesign.getFieldByDesignName('WorkingDirectory', names{i});
                 workingDirectory = workingDirectory{:};
                 processParams = convertDesign.getFieldByDesignName('ProcessParam', names{i});
@@ -152,7 +147,6 @@ classdef Controller < biotracs.core.mvc.controller.Controller
                 workflowName = strcat('MetaboLinkingWorkflow_', currentBatch, '_', currentPolarity);
                 %configuration
                 extractWorkflowName = strcat('MetaboExtractionWorkflow_', currentBatch, '_', currentPolarity);
-                % if this.hasElement(extractWorkflowName)
                 
                 extractWorkflow = this.get(extractWorkflowName);
                 if extractWorkflow.isEnded()
@@ -193,19 +187,15 @@ classdef Controller < biotracs.core.mvc.controller.Controller
                 currentBatch = currentBatch{:};
                 currentPolarity = convertDesign.getFieldByDesignName('Polarity', names{i});
                 currentPolarity= currentPolarity{:};
-                %                 dataDirectory = convertDesign.getFieldByDesignName('DataDirectory',  names{i});
                 workingDirectory = convertDesign.getFieldByDesignName('WorkingDirectory', names{i});
                 workingDirectory = workingDirectory{:};
                 metaDataPath = convertDesign.getFieldByDesignName('SampleMetaData', names{i});
                 
-                %                 metaDataPath = metaDataPath{:}
                 posProcessParams = convertDesign.getFieldByDesignName('^PosProcessParam', names{i});
                 negProcessParams = convertDesign.getFieldByDesignName('^NegProcessParam', names{i});
                 mergeProcessParams = convertDesign.getFieldByDesignName('^NegPosProcessParam', names{i});
                 workflowName = strcat('PreprocessingWorkflow_', currentBatch, '_', currentPolarity);
                 %configuration
-                %                 linkingWorkflowName = strcat('MetaboLinkingWorkflow_', currentBatch, '_', currentPolarity);
-                %                 linkingWorkflow = this.getNode(linkingWorkflowName);
                 
                 if strcmpi(currentPolarity, 'pos')
                     linkingWorkflowName = strcat('MetaboLinkingWorkflow_', currentBatch, '_', currentPolarity);
@@ -224,10 +214,13 @@ classdef Controller < biotracs.core.mvc.controller.Controller
                     processParams = posProcessParams;
                 elseif strcmpi(currentPolarity, 'neg')
                     linkingWorkflowName = strcat('MetaboLinkingWorkflow_', currentBatch, '_', currentPolarity);
-                    linkingWorkflow = this.get(linkingWorkflowName);
-                    if linkingWorkflow.isEnded()
-                        negDataDirectory =  linkingWorkflow.getNode('TextExporter').getConfig().getParamValue('WorkingDirectory');
-                        posDataDirectory = '';
+                    
+                    if  this.exist(linkingWorkflowName)
+                        linkingWorkflow = this.get(linkingWorkflowName);
+                        if linkingWorkflow.isEnded()
+                            negDataDirectory =  linkingWorkflow.getNode('TextExporter').getConfig().getParamValue('WorkingDirectory');
+                            posDataDirectory = '';
+                        end
                     else
                         posDataDirectory = convertDesign.getFieldByDesignName('PosDataDirectory',  names{i});
                         posDataDirectory= posDataDirectory{:};
@@ -237,13 +230,16 @@ classdef Controller < biotracs.core.mvc.controller.Controller
                     processParams = negProcessParams;
                 elseif strcmpi(currentPolarity, 'NegPos')
                     linkingWorkflowNamePos = strcat('MetaboLinkingWorkflow_', currentBatch,'_Pos');
-                    linkingWorkflowPos = this.get(linkingWorkflowNamePos);
                     linkingWorkflowNameNeg = strcat('MetaboLinkingWorkflow_', currentBatch,'_Neg');
-                    linkingWorkflowNeg = this.get(linkingWorkflowNameNeg);
-                    if linkingWorkflowPos.isEnded() && linkingWorkflowNeg.isEnded()
-                        posDataDirectory =  linkingWorkflowPos.getNode('TextExporter').getConfig().getParamValue('WorkingDirectory');
-                        negDataDirectory =  linkingWorkflowNeg.getNode('TextExporter').getConfig().getParamValue('WorkingDirectory');
-                        processParams = [posProcessParams, negProcessParams, mergeProcessParams];
+                    
+                    if  this.exist(linkingWorkflowNamePos) && this.exist(linkingWorkflowNameNeg)
+                        linkingWorkflowPos = this.get(linkingWorkflowNamePos);
+                        linkingWorkflowNeg = this.get(linkingWorkflowNameNeg);
+                        if linkingWorkflowPos.isEnded() && linkingWorkflowNeg.isEnded()
+                            posDataDirectory =  linkingWorkflowPos.getNode('TextExporter').getConfig().getParamValue('WorkingDirectory');
+                            negDataDirectory =  linkingWorkflowNeg.getNode('TextExporter').getConfig().getParamValue('WorkingDirectory');
+                            processParams = [posProcessParams, negProcessParams, mergeProcessParams];
+                        end
                     else
                         posDataDirectory = convertDesign.getFieldByDesignName('PosDataDirectory',  names{i});
                         posDataDirectory= posDataDirectory{:};

@@ -224,13 +224,27 @@ classdef DriftCorrector < biotracs.mimosa.model.BaseProcess
             
             %Compute reference batch
             refBatchIndex = 1;
-            refQcFeatureSet = iQcFeatureSetContainer.getAt(1);
+            
+            if strcmp(this.config.getParamValue('SamplesToUseForInterBatchCorrection'), 'All')
+                refFeatureSet = vertmerge( iQcFeatureSetContainer.getAt(1), iSampleFeatureSetContainer.getAt(1) );
+            elseif strcmp(this.config.getParamValue('SamplesToUseForInterBatchCorrection'), 'QCOnly')
+                refFeatureSet = iQcFeatureSetContainer.getAt(1);
+            elseif strcmp(this.config.getParamValue('SamplesToUseForInterBatchCorrection'), 'SamplesWithoutQC')
+                refFeatureSet = iSampleFeatureSetContainer.getAt(1);
+            end
+            
             for batchIndex=2:nbBatches
-                qcFeatureSet = iQcFeatureSetContainer.getAt(batchIndex);
-                isAverageIntensityHigher = mean(mean(qcFeatureSet.data)) > mean(mean(refQcFeatureSet.data));
+                if strcmp(this.config.getParamValue('SamplesToUseForInterBatchCorrection'), 'All')
+                    currentFeatureSet = vertmerge( iQcFeatureSetContainer.getAt(batchIndex), iSampleFeatureSetContainer.getAt(batchIndex) );
+                elseif strcmp(this.config.getParamValue('SamplesToUseForInterBatchCorrection'), 'QCOnly')
+                    currentFeatureSet = iQcFeatureSetContainer.getAt(batchIndex);
+                elseif strcmp(this.config.getParamValue('SamplesToUseForInterBatchCorrection'), 'SamplesWithoutQC')
+                    currentFeatureSet = iSampleFeatureSetContainer.getAt(batchIndex);
+                end
+                isAverageIntensityHigher = mean(mean(currentFeatureSet.data)) > mean(mean(refFeatureSet.data));
                 if isAverageIntensityHigher
                     refBatchIndex = batchIndex;
-                    refQcFeatureSet = qcFeatureSet;
+                    refFeatureSet = currentFeatureSet;
                 end
             end
             fprintf(' > the reference batch is %d\n', refBatchIndex);
@@ -255,10 +269,26 @@ classdef DriftCorrector < biotracs.mimosa.model.BaseProcess
                         iSampleFeatureSetContainer.getElementName(batchIndex), ...
                         sampleFeatureSet);
                 else
+                    % If:
+                    % 1) The correction is based on QCs => suppose that the
+                    % QCs must have the same statistical properties in all
+                    % batches
+                    % 2) The correction is based on all the samples =>
+                    % suppose that the samples distributions must have the
+                    % same statistical properties in all batches. Than mean
+                    % that data are well randomized
+                    if strcmp(this.config.getParamValue('SamplesToUseForInterBatchCorrection'), 'All')
+                        corrFeatureSet = vertmerge( iQcFeatureSetContainer.getAt(batchIndex), iSampleFeatureSetContainer.getAt(batchIndex) );
+                    elseif strcmp(this.config.getParamValue('SamplesToUseForInterBatchCorrection'), 'QCOnly')
+                        corrFeatureSet = iQcFeatureSetContainer.getAt(batchIndex);
+                    elseif strcmp(this.config.getParamValue('SamplesToUseForInterBatchCorrection'), 'SamplesWithoutQC')
+                        corrFeatureSet = iSampleFeatureSetContainer.getAt(batchIndex);
+                    end
+                    
                     % Mean/Std-based correction
                     qcData = biotracs.math.centerscale(...
                         qcFeatureSet.data, ...
-                        [], ...
+                        corrFeatureSet.data, ...
                         'Center', true, ...
                         'Scale', 'uv' ...
                         );
@@ -266,7 +296,7 @@ classdef DriftCorrector < biotracs.mimosa.model.BaseProcess
                     % Mean/Std-based correction
                     sampleData = biotracs.math.centerscale(...
                         sampleFeatureSet.data, ...
-                        qcFeatureSet.data, ...
+                        corrFeatureSet.data, ...
                         'Center', true, ...
                         'Scale', 'uv' ...
                         );
@@ -274,14 +304,14 @@ classdef DriftCorrector < biotracs.mimosa.model.BaseProcess
                     %Reverse scaling accoding to the reference QC
                     qcData = biotracs.math.reversecenterscale(...
                         qcData, ...
-                        refQcFeatureSet.data, ...
+                        refFeatureSet.data, ...
                         'Center', true, ...
                         'Scale', 'uv' ...
                         );
                     
                     sampleData = biotracs.math.reversecenterscale(...
                         sampleData, ...
-                        refQcFeatureSet.data, ...
+                        refFeatureSet.data, ...
                         'Center', true, ...
                         'Scale', 'uv' ...
                         );
