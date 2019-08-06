@@ -1,5 +1,5 @@
 
-addpath('./img');
+addpath('./img/BioTracs/');
 addpath('../tests/')
 autoload( ...
     'PkgPaths', {fullfile(pwd, '../../')}, ...
