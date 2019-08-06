@@ -93,8 +93,8 @@ end
 
 function displayHelp( options )
     disp(' ');
-    disp('Help for Biotracs-Mimosa App');
-    disp(' ');
+    disp('+ Help for Biotracs-Mimosa App');
+    disp('--------------------------------------------------------------');
     for i=1:length(options.short)
         fprintf(...
             '%s \n\tOptions:\t%s (%s) \n\tValue:\t\t%s\n\n', ...
@@ -106,15 +106,9 @@ function displayHelp( options )
     end
     
     disp(' ');
-    disp('Dependencies');
-    disp(' ');
-    
-    
-%     t = table(...
-%         options.short', options.long', options.value', options.description', ...
-%         'VariableNames', {'Short', 'Long', 'Value', 'Decription'} ...
-%         );
-%     disp(t);
+    disp('+ Dependency variables');
+    disp('--------------------------------------------------------------');
+    disp(biotracs.core.env.Env.vars());
 end
 
 
