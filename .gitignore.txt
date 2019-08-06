@@ -6,3 +6,4 @@
 .log
 **/ver.ignore/
 **/vendor/
+**/__MACOSX/
