@@ -54,6 +54,10 @@ function main( varargin )
         fprintf( 'mcc %s %s %s %s %s %s %s\n', '-m', 'main.m', '-v', '-w', 'enable',  strjoin(arg, ' '), ['-d ', optionMap('o')] );
         %return;
         
+        if ~isfolder(optionMap('o'))
+            mkdir(optionMap('o'))
+        end
+        
         mcc( '-m', 'main.m', '-v', '-w', 'enable', '-d', optionMap('o'), arg{:} );
         return;
     else
@@ -83,7 +87,8 @@ function main( varargin )
             elseif isKey(optionMap, 'p')
                 run( optionMap('p')  )
             else
-                %do nothing ...
+                %show gui by default
+                showGui();
             end
         catch err
             fprintf('%s\nPlease read manual or display help (--help) for more information.\n', err.message);
