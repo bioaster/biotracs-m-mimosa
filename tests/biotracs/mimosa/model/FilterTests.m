@@ -129,7 +129,24 @@ classdef FilterTests < matlab.unittest.TestCase
             
             testCase.verifyEqual(filteredFeatureSetQcOnly.data, expectedFilteredFeatureSetQcOnly.data, 'RelTol', 1e-6 );
             
+             %SampleOnly
+            process = biotracs.mimosa.model.Filter();
+            c = process.getConfig();
+            process.setInputPortData('FeatureSet', featureMatrix);
+            c.updateParamValue('WorkingDirectory', testCase.workingDir);
+            c.updateParamValue('LoQ', 1e4);
+            c.updateParamValue('PercentageRuleThreshold', 0.8);
+            c.updateParamValue('QcCvThreshold', []);
+            c.updateParamValue('GroupList', {'Injection:Cond1', 'Injection:Cond2','Injection:CTL'});
+            c.updateParamValue('MethodOfFiltering', 'SampleOnly');
+            process.run();
+            filteredFeatureSetSampleOnly = process.getOutputPortData('FeatureSet');
+            filteredFeatureSetSampleOnly.export([ testCase.workingDir, '/filteredFeatureSet_PercRule_SampleOnly.csv' ]);
+            expectedFilteredFeatureSetQcAndSample  = biotracs.spectra.data.model.MSFeatureSet.import(...
+                '../../../testdata/Filtering/FilteredFeatureSet_PercRule_QcAndSample.csv');
             
+            testCase.verifyEqual(filteredFeatureSetSampleOnly.data, expectedFilteredFeatureSetQcAndSample.data, 'RelTol', 1e-6 );
+           
             %QcAndSample
             process = biotracs.mimosa.model.Filter();
             c = process.getConfig();

@@ -29,8 +29,8 @@ function testMimosa( cleanAll )
 
 %     Tests = TestSuite.fromFile('./controller/ControllerTests.m');
 %     Tests = TestSuite.fromFile('./model/GapFillerTests.m');
-%     Tests = TestSuite.fromFile('./model/FilterTests.m');
-    Tests = TestSuite.fromFile('./model/DriftCorrectorTests.m');
+    Tests = TestSuite.fromFile('./model/FilterTests.m');
+%     Tests = TestSuite.fromFile('./model/DriftCorrectorTests.m');
 %     Tests = TestSuite.fromFile('./model/FeatureGrouperTests.m');
 %     Tests = TestSuite.fromFile('./model/ConsensusDataExtractorTests.m');
 %     Tests = TestSuite.fromFile('./model/ConsensusExtDataTableTests.m');
