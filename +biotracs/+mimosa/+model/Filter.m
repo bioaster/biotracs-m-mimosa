@@ -72,7 +72,7 @@ classdef Filter < biotracs.mimosa.model.BaseProcess
             indexesOfFeatruesStableInQcs = true(1,nbFeatures);
             if nbBatches <= 2
                 if ~isempty(QcCvThreshold) && QcCvThreshold < Inf
-                    fprintf( '\nFilter using a QC CV threshold of %1.1f\n. The CV must be inferior to the threhold in both batches', QcCvThreshold );
+                    fprintf( '\nFilter using a QC CV threshold of %1.1f. \n The CV must be inferior to the threhold in both batches', QcCvThreshold );
                     qcCvDm = biotracs.data.model.DataMatrix(zeros(0,nbFeatures));
                     
                     for i=1:nbBatches
@@ -145,6 +145,7 @@ classdef Filter < biotracs.mimosa.model.BaseProcess
             
             if ~isempty(percentageRuleThreshold) && percentageRuleThreshold > 0
                 if isempty(iQcFeatureSetContainer.elements) || strcmp(methodOfFiltering, 'SampleOnly')
+                    disp('cocou');
                     indexesOfFeaturesDetectedInAtLeastOneGroup = false(1,nbFeatures);
                     indexesOfFeaturesDetectedInAllGroups = true(1,nbFeatures);
                     fprintf( '\nFilter using the percentage rule with a threhold of %1.0f%% in groups {''%s''}\n', 100*percentageRuleThreshold, strjoin(sampleGroupList,''',''') );
