@@ -19,6 +19,8 @@ classdef FeatureSummaryResult < biotracs.core.mvc.model.ResourceSet
         
         % Constructor
         function this = FeatureSummaryResult( varargin )
+            %#function biotracs.mimosa.view.FeatureSummaryResult
+            
             this@biotracs.core.mvc.model.ResourceSet( varargin{:} );
             this.bindView( biotracs.mimosa.view.FeatureSummaryResult() );
         end

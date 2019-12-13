@@ -25,6 +25,8 @@ classdef FeatureSummary < biotracs.mimosa.model.BaseProcess
         
         % Constructor
         function this = FeatureSummary()
+            %#function biotracs.mimosa.model.FeatureSummaryConfig biotracs.spectra.data.model.MSFeatureSet biotracs.data.model.DataMatrix biotracs.data.model.DataTable biotracs.mimosa.model.FeatureSummaryResult
+            
             this@biotracs.mimosa.model.BaseProcess();
             this.configType = 'biotracs.mimosa.model.FeatureSummaryConfig';
             this.setDescription('Algorithm for extracting the Consensus table');

@@ -25,6 +25,8 @@ classdef FeatureGrouper < biotracs.mimosa.model.BaseProcess
         
         % Constructor
         function this = FeatureGrouper()
+            %#function biotracs.mimosa.model.FeatureGrouperConfig biotracs.spectra.data.model.MSFeatureSet biotracs.data.model.DataMatrix
+            
             this@biotracs.mimosa.model.BaseProcess();
             this.configType = 'biotracs.mimosa.model.FeatureGrouperConfig';
             this.setDescription('Algorithm for feature grouping');

@@ -25,6 +25,8 @@ classdef FeatureMerger < biotracs.mimosa.model.BaseProcess
         
         % Constructor
         function this = FeatureMerger()
+            %#function biotracs.mimosa.model.FeatureMergerConfig biotracs.spectra.data.model.MSFeatureSet
+            
             this@biotracs.mimosa.model.BaseProcess();
             this.configType = 'biotracs.mimosa.model.FeatureMergerConfig';
             this.setDescription('Algorithm for feature modes merging');

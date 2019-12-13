@@ -32,8 +32,9 @@ classdef AdductCalculator < handle
     end
     
     methods(Access = public)
-        %TODO: remove the data not used in calculator
         function this = AdductCalculator( iFeatureSet, varargin )
+            %#function biotracs.mimosa.view.AdductMatrix
+            
             p = inputParser();
             p.addParameter('LinkIsofeatures', false, @islogical);
             p.KeepUnmatched = true;

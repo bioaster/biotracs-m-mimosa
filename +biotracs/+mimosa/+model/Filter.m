@@ -25,6 +25,7 @@ classdef Filter < biotracs.mimosa.model.BaseProcess
         
         % Constructor
         function this = Filter()
+            %#function biotracs.mimosa.model.FilterConfig biotracs.data.model.DataMatrix
             this@biotracs.mimosa.model.BaseProcess();
             this.setDescription('Algorithm for filtering a FeatureSet');
             

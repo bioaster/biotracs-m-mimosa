@@ -25,6 +25,8 @@ classdef ConsensusDataExtractor < biotracs.mimosa.model.BaseProcess
         
         % Constructor
         function this = ConsensusDataExtractor()
+            %#function biotracs.mimosa.model.ConsensusDataExtractorConfig biotracs.mimosa.model.ConsensusExtDataTable
+            
             this@biotracs.mimosa.model.BaseProcess();
             this.configType = 'biotracs.mimosa.model.ConsensusDataExtractorConfig';
             this.setDescription('Algorithm for extracting the Consensus table');

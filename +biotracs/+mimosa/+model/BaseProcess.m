@@ -16,6 +16,8 @@ classdef (Abstract)BaseProcess < biotracs.core.mvc.model.Process
         
         % Constructor
         function this = BaseProcess()
+            %#function biotracs.mimosa.model.BaseProcessConfig biotracs.spectra.data.model.MSFeatureSet 
+            
             this@biotracs.core.mvc.model.Process();
             this.configType = 'biotracs.mimosa.model.BaseProcessConfig';
             

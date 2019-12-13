@@ -25,6 +25,8 @@ classdef FeatureUngrouper < biotracs.mimosa.model.BaseProcess
         
         % Constructor
         function this = FeatureUngrouper()
+            %#function biotracs.mimosa.model.FeatureUngrouperConfig biotracs.spectra.data.model.MSFeatureSet biotracs.data.model.DataTable
+            
             this@biotracs.mimosa.model.BaseProcess();
             this.configType = 'biotracs.mimosa.model.FeatureUngrouperConfig';
             this.setDescription('Algorithm for extracting the Consensus table');

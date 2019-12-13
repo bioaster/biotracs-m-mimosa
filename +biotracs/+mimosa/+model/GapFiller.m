@@ -25,9 +25,10 @@ classdef GapFiller < biotracs.mimosa.model.BaseProcess
         
         % Constructor
         function this = GapFiller()
-             this@biotracs.mimosa.model.BaseProcess();
-             this.configType = 'biotracs.mimosa.model.GapFillerConfig';
-             this.setDescription('Algrithm for gap filling');
+            %#function biotracs.mimosa.model.GapFillerConfig
+            this@biotracs.mimosa.model.BaseProcess();
+            this.configType = 'biotracs.mimosa.model.GapFillerConfig';
+            this.setDescription('Algrithm for gap filling');
         end
         
     end
@@ -44,16 +45,16 @@ classdef GapFiller < biotracs.mimosa.model.BaseProcess
             if (limitOfQuantitation == 0)
                 this.setIsPhantom( true)
             end
-%             this.isPhantom = (limitOfQuantitation == 0);
-
+            %             this.isPhantom = (limitOfQuantitation == 0);
+            
         end
         
         function doRun( this )
             trainingSet = this.getInputPortData('FeatureSet');
-            [ gapFilledFeatureSet ] = this.doFillGaps( trainingSet );  
+            [ gapFilledFeatureSet ] = this.doFillGaps( trainingSet );
             this.setOutputPortData('FeatureSet', gapFilledFeatureSet);
         end
-
+        
         function [oTrainingSet] = doFillGaps( this, iTrainingSet )
             oTrainingSet = iTrainingSet.copy().discardProcess();
             limitOfQuantitation = this.config.getParamValue('LoQ');

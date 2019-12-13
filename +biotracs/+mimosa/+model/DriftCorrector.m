@@ -25,6 +25,8 @@ classdef DriftCorrector < biotracs.mimosa.model.BaseProcess
         
         % Constructor
         function this = DriftCorrector()
+            %#function biotracs.mimosa.model.DriftCorrectorConfig
+            
             this@biotracs.mimosa.model.BaseProcess();
             this.setDescription('Algorithms for inter and intra-batch analytical drift correction.');
             

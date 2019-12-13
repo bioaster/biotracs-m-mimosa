@@ -5,11 +5,8 @@
         "biotracs-m-atlas",
         "biotracs-m-metadata",
         "biotracs-m-mzconvert",
-        "biotracs-m-openms"
+        "biotracs-m-openms",
+        "biotracs-m-lipidmatch"
 		],
-    "variables": {
-        "RExecutableFilePath": "C:/Program Files/R/R-3.3.3/bin/Rscript.exe",
-        "LipidMatchFilePath": "%BIOTRACS_M_LIPIDMATCH_DIR%/externs/r/LipidMatch/v2/LipidMatch_v4.r",
-        "LipidMatchLibraryPath": "%BIOTRACS_M_LIPIDMATCH_DIR%/externs/r/LipidMatch/v2/LipidMatch_Libraries_acetate"
-    }
+    "variables": {}
 }
