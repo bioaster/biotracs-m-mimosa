@@ -25,7 +25,6 @@ classdef Filter < biotracs.mimosa.model.BaseProcess
         
         % Constructor
         function this = Filter()
-            %#function biotracs.mimosa.model.FilterConfig biotracs.data.model.DataMatrix
             this@biotracs.mimosa.model.BaseProcess();
             this.setDescription('Algorithm for filtering a FeatureSet');
             
@@ -199,6 +198,7 @@ classdef Filter < biotracs.mimosa.model.BaseProcess
                     for j=1:length(sampleGroupList)
                         pattern  = sampleGroupList{j};
                         sampleFeatureSet = vertcat(iSampleFeatureSetContainer.elements{:});
+                        sampleFeatureSet
                         indexesOfDetectedInThisGroup = this.doFilterByPercentageRule( sampleFeatureSet, pattern, limitOfQuantitation, percentageRuleThreshold);
                         indexesOfFeaturesDetectedInAtLeastOneGroup = indexesOfFeaturesDetectedInAtLeastOneGroup | indexesOfDetectedInThisGroup;	 %OR
                         if strcmp(methodOfFiltering, 'QcAndSample')
